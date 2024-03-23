@@ -81,7 +81,7 @@ def get_ICD9s_from_mimic_file(fileName, hadmToMap):
 
 def convert_type_to_float(type):
 	#very specific to Mimic-III ADMISSIONS.csv
-	code = 0
+	code = 4
 	if type == 'NEWBORN': code = 0
 	elif type == 'ELECTIVE': code = 1
 	elif type == 'EMERGENCY': code = 2
