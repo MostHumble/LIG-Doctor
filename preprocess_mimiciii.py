@@ -231,12 +231,16 @@ if __name__ == '__main__':
 	for subject_id, hadmList in subjectTOhadms_Map.iteritems():
 		if len(hadmList) < 2:
 			number_of_subjects_with_only_one_visit += 1
-			continue  #discard subjects with only 2 admissions
+			continue  #discard subjects with less than 2 admissions
 		#sorts the hadm_ids according to date admttime
 		#only for the hadm_id in the list hadmList
 		sortedList = sorted([(hadmTOadmttime_Map[hadm_id], hadmToICD9CODEs_Map[hadm_id], hadm_id) for hadm_id in hadmList])
 		# each element in subjectTOorderedHADM_IDS_Map is a key-value (subject_id, (admittime, ICD9_List, hadm_id))
 		subjectTOorderedHADM_IDS_Map[subject_id] = sortedList
+		if len(ARGS.procedures_file) > 0:
+			sortedList = sorted([(hadmTOadmttime_Map[hadm_id], hadmToICD9ProcCODEs_Map[hadm_id], hadm_id) for hadm_id in hadmList])
+			subjectTOProcHADM_IDs_Map[subject_id] = sortedList
+
 	print '-Number of discarded subjects with only one admission: ' + str(number_of_subjects_with_only_one_visit)
 	print '-Number of subjects after ordering: ' + str(len(subjectTOorderedHADM_IDS_Map))
 
